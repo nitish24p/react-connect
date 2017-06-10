@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CreateNewBoard from './../helpers/CreateNewBoard';
+import DecideGameWinner from './../helpers/DecideGameWinner';
 
 import Row from './Row';
 
@@ -62,12 +63,17 @@ class Board extends Component {
       board[rowToAdd][columnIndex] = this.state.nextPlayer;
 
       this.setState({board});
+      this.isGameOver(board)
       this.togglePlayer();
     }
 
     isGameOver() {
       const board = this.state.board;
-      
+      const currentPlayer = this.state.nextPlayer;
+      const isGameOver = DecideGameWinner(board);
+      if (isGameOver) {
+        alert(`Game won by ${currentPlayer}`);
+      }
     }
 
     render() {

@@ -18,7 +18,7 @@ const Row = (props) => {
     });
 
   return (
-    <div>
+    <div className="row">
     {generateCells}
     </div>
   )

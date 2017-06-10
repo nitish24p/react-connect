@@ -1,13 +1,16 @@
 import React from 'react';
 
-const Cell = (props) => {
-  console.log('insideCell', props)
+const determineCellClass = (cell) => {
+  if(cell === 'red') return 'red';
+  else if (cell === 'blue') return 'blue';
+  else return ''
+}
 
+const Cell = (props) => {
   return(
-    <div className='cell {props.cell ? yes}'
+    <div className={`cell ${determineCellClass(props.cell)}`}
       onClick={() => props.addPiece(props.columnIndex)}
     >
-      {props.cell}
     </div>
   )
 }
