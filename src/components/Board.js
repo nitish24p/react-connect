@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CreateNewBoard from './../helpers/CreateNewBoard';
 import DecideGameWinner from './../helpers/DecideGameWinner';
+import determineCellClass from './../helpers/CellHelperClass'
 
 import Row from './Row';
 
@@ -79,8 +80,15 @@ class Board extends Component {
     render() {
         return (
           <div>
-            created a board
             {this.renderBoard()}
+
+            <div>
+              <p>
+                Next Player Turn :
+                <span className={`mini-cell ${determineCellClass(this.state.nextPlayer)}`}>
+                </span>
+              </p>
+            </div>
           </div>
         );
     }
