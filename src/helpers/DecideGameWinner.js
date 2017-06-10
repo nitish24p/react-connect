@@ -1,7 +1,7 @@
 const WINNING_COUNT = 4;
 
 const DecideGameWinner = (board) => {
-  if (horizontalCheck(board).isGameOver || verticalCheck(board).isGameOver) {
+  if (horizontalCheck(board).isGameOver || verticalCheck(board).isGameOver || topLeftDiagonalCheck(board).isGameOver) {
     return true
   }
 }
@@ -81,25 +81,47 @@ const verticalCheck = (board) => {
 }
 
 
-const diagonalCheck = (board) => {
-  var rowIndex, columnIndex, redCount = 0, blueCount = 0;
+const topLeftDiagonalCheck = (board) => {
+  var redCount = 0, blueCount = 0;
   let winnerObj = {};
   const rowLength = board.length;
   const columnLength = board[0].length;
 
-  var maxLength = Math.max(rowLength, columnLength);
-
-  var temp;
-
+  /*
+  * Really Terrible algo complexity.. :(
+  */
+  var maxLength = Math.max(columnLength, rowLength);
   for (var k = 0; k <= 2 * (maxLength - 1); ++k) {
-      temp = [];
-      for (var y = columnLength - 1; y >= 0; --y) {
+      for (var y = rowLength - 1; y >= 0; --y) {
           var x = k - y;
-          if (x >= 0 && x < rowLength) {
-              console.log(board[x][y])
+          if (x >= 0 && x < columnLength) {
+            if (board[y][x] === 'red') {
+              redCount ++;
+              blueCount = 0;
+            } else if (board[y][x] === 'blue') {
+              blueCount ++;
+              redCount = 0;
+            }
+
+            if (redCount === WINNING_COUNT) {
+              winnerObj.isGameOver = true;
+              winnerObj.winner = 'red';
+              break;
+            }
+
+            if (blueCount === WINNING_COUNT) {
+              winnerObj.isGameOver = true;
+              winnerObj.winner = 'blue';
+              break;
+            }
           }
       }
+
+      redCount = 0;
+      blueCount = 0;
   }
+
+  return winnerObj;
 
 }
 
